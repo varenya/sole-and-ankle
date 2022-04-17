@@ -37,6 +37,7 @@ const ShoeCard = ({
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
+        {showPromo(variant)}
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
@@ -49,6 +50,15 @@ const ShoeCard = ({
     </Link>
   );
 };
+function showPromo(variant) {
+  if (variant === "new-release") {
+    return <Promo variant={variant}>Just Released!</Promo>;
+  }
+  if (variant === "on-sale") {
+    return <Promo variant={variant}>Sale</Promo>;
+  }
+  return null;
+}
 
 const Link = styled.a`
   flex: 1 0 340px;
@@ -56,7 +66,21 @@ const Link = styled.a`
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+  position: relative;
+`;
+
+const Promo = styled.span`
+  position: absolute;
+  top: 12px;
+  right: 0px;
+  background: ${(props) =>
+    props.variant === "new-release" ? COLORS.secondary : COLORS.primary};
+  font-weight: ${WEIGHTS.medium};
+  margin-right: -4px;
+  padding: 9px 16px;
+  color: ${COLORS.white};
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -68,6 +92,7 @@ const Image = styled.img`
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
 `;
 
 const Name = styled.h3`
@@ -75,7 +100,9 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  margin-left: auto;
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
